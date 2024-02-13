@@ -1,0 +1,30 @@
+aqua Main
+
+import "@fluencelabs/aqua-lib/builtin.aqua"
+import "@fluencelabs/aqua-lib/subnet.aqua"
+
+import SpellLocation from "hosts.aqua"
+
+use "deals.aqua"
+use "hosts.aqua"
+import "services.aqua"
+
+export writeMetadata, readMetadata
+
+func getWorkerInfo() -> []SpellLocation:
+    hosts <- Hosts.get()  
+    <- hosts.defaultWorker!.installationSpells
+
+func readMetadata() -> *[]i32:
+    workers <- getWorkerInfo()
+    receipt:  *[]i32
+    for w <- workers:
+        on w.workerId via w.hostId:
+            receipt <- Erc721.readMetadata()
+    <- receipt
+
+func writeMetadata(uint8Array: []i32):
+    workers <- getWorkerInfo()
+    for w <- workers:
+        on w.workerId via w.hostId:
+            Erc721.writeMetadata(uint8Array)

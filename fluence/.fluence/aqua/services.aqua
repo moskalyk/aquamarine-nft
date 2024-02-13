@@ -1,0 +1,3 @@
+service Erc721("erc721"):
+  readMetadata() -> []i32
+  writeMetadata(values: []i32)
