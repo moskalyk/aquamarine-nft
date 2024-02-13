@@ -1,4 +1,5 @@
 # aquamarine-nft
+serving metadata direct from nox experiment
 
 [x] upload metadata to nox
 [x] store a nox ed25519 PeerId as a baseURI
